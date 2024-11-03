@@ -4,7 +4,7 @@ import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
 const client = createClient({
-    url: process.env.TURSO_CONNECTION_URL!,
+    url: "libsql://socket-playground-brenelz.turso.io",
     authToken: process.env.TURSO_AUTH_TOKEN!,
 });
 
