@@ -1,4 +1,4 @@
-# SolidStart Sockets Playground
+# SolidStart Sockets Playground2
 
 Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
 
