@@ -1,18 +1,26 @@
-import { createSignal } from "solid-js";
-import { useTodos } from "~/lib/socket";
+import { createSignal } from "solid-js"
+import { useSocket } from "~/lib/notification-socket";
 import { createSocketMemo } from "../../socket/lib/shared";
 
-export default function Home() {
-  const [filter, setFilter] = createSignal('date');
-  const serverTodos = useTodos(createSocketMemo(() => filter()));
+export default function Notifications() {
+  const [userId, setUserId] = createSignal('1');
+  const socket = useSocket(createSocketMemo(userId));
 
   return (
-    <pre>
-      {JSON.stringify(serverTodos.todos(), null, 4)}
+    <>
       <button onClick={() => {
-        serverTodos.addTodo()
-        setFilter('something else');
-      }}>Add me</button>
-    </pre >
-  );
+        if (userId() === '1') {
+          setUserId('2');
+        } else {
+          setUserId('1');
+        }
+      }}>Change user</button>
+      <p>Your Notifications ({userId()})</p>
+
+      {socket.notifications()?.length} notifications
+
+      <p>Send Notifications</p>
+      <p><button onClick={() => socket.sendNotification(userId())}>Send</button></p>
+    </>
+  )
 }
