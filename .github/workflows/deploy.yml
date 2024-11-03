@@ -34,8 +34,8 @@ jobs:
       - name: Build step
         run: "NITRO_PRESET=deno-deploy npm run build"
         env: # Or as an environment variable
-          TURSO_CONNECTION_URL: test
-          TURSO_AUTH_TOKEN: test
+          TURSO_CONNECTION_URL: ${{ secrets.TURSO_CONNECTION_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
