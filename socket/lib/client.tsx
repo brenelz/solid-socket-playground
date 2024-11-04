@@ -21,7 +21,9 @@ import { createAsync } from "@solidjs/router";
 import { createLazyMemo } from "@solid-primitives/memo";
 
 const globalWsPromise = new Promise<SimpleWs>((resolve) => {
-  const ws = new WebSocket(`ws://${location.hostname}:${location.port}/_ws`);
+  const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+  const wsUrl = `${protocol}://${window.location.hostname}:${window.location.port}/_ws`;
+  const ws = new WebSocket(wsUrl);
   ws.onopen = () => resolve(ws);
 });
 
