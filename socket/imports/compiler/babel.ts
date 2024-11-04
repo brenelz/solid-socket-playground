@@ -11,6 +11,7 @@ const specificImports = [
   "observable",
   "untrack",
   "onCleanup",
+  "createResource"
 ];
 
 export function createTransform$(opts?: ImportPluginOptions) {

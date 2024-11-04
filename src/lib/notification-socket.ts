@@ -1,9 +1,13 @@
 "use socket";
 
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createResource, createSignal } from "solid-js";
 import { createSocketMemo } from "../../socket/lib/shared";
 import { db, notificationsTable } from "./db";
 import { eq } from "drizzle-orm";
+
+async function getData(userId: string) {
+    return db.select().from(notificationsTable).where(eq(notificationsTable.userId, userId)).all();
+}
 
 const [triggerUpdate, setTriggerUpdate] = createSignal(false);
 
@@ -16,14 +20,10 @@ const sendNotification = async (userId: string | undefined) => {
 }
 
 export const useSocket = (userId: () => string | undefined) => {
-    const [notifications, setNotifications] = createSignal<any[]>();
+    const [notifications, { refetch }] = createResource(() => userId(), getData);
 
     createEffect(() => {
-        async function getData() {
-            const res = await db.select().from(notificationsTable).where(eq(notificationsTable.userId, String(userId()))).all();
-            setNotifications(res);
-        }
-        getData();
+        refetch();
         if (triggerUpdate()) {
             setTriggerUpdate(false);
         }
