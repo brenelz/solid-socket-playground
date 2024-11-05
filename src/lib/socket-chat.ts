@@ -8,15 +8,18 @@ async function getMessages() {
     return db.select().from(messagesTable);
 }
 
-const [triggerUpdate, setTriggerUpdate] = createSignal(false);
+if (!globalThis.triggerUpdate) {
+    const [triggerUpdate, setTriggerUpdate] = createSignal(false);
+    globalThis.triggerUpdate = triggerUpdate;
+    globalThis.setTriggerUpdate = setTriggerUpdate;
+}
 
 const addMessage = async (props: { name: string, message: string }) => {
     await db.insert(messagesTable).values({
         name: props.name,
         message: props.message
     })
-    setTriggerUpdate(true);
-
+    globalThis.setTriggerUpdate(true);
 }
 
 export const useSocketChat = () => {
@@ -24,8 +27,8 @@ export const useSocketChat = () => {
 
     createEffect(() => {
         refetch();
-        if (triggerUpdate()) {
-            setTriggerUpdate(false);
+        if (globalThis.triggerUpdate()) {
+            globalThis.setTriggerUpdate(false);
         }
     });
 
