@@ -26,3 +26,9 @@ export const notificationsTable = sqliteTable('notifications', {
     createdAt: text("timestamp").default(sql`(CURRENT_TIMESTAMP)`),
     readAt: text("timestamp")
 });
+
+export const messagesTable = sqliteTable('messages', {
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    name: text('name'),
+    message: text('message'),
+});
