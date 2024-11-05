@@ -22,6 +22,7 @@
     "@vinxi/plugin-directives": "^0.4.3",
     "drizzle-kit": "^0.27.1",
     "drizzle-orm": "^0.36.0",
+    "nitropack": "^2.10.2",
     "rxjs": "^7.8.1",
     "solid-js": "^1.9.2",
     "vinxi": "^0.4.3"
