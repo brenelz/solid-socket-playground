@@ -25,8 +25,9 @@ export const useSocketChat = () => {
     const [messages, { refetch }] = createResource(() => getMessages());
 
     createEffect(() => {
+        refetch();
         if (triggerUpdate()) {
-            refetch();
+            setTriggerUpdate(false);
         }
     })
 
