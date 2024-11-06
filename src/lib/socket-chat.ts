@@ -1,11 +1,11 @@
 "use socket";
 
-import { openKv } from "@deno/kv";
 import { createEffect, createResource } from "solid-js";
 import { createSocketMemo } from "../../socket/lib/shared";
 import { db, messagesTable } from "./db";
+import { useKv } from "./useKv";
 
-const kv = await openKv("https://api.deno.com/databases/a53bab8f-3ab2-45c9-ba85-f8d9a8db5375/connect");
+const kv = await useKv("https://api.deno.com/databases/a53bab8f-3ab2-45c9-ba85-f8d9a8db5375/connect");
 
 async function getMessages() {
     return db.select().from(messagesTable);
@@ -24,7 +24,7 @@ export const useSocketChat = () => {
 
     createEffect(() => {
         async function watch() {
-            for await (const [triggerUpdate] of kv.watch([["triggerUpdate"]])) {
+            for await (const [_] of kv.watch([["triggerUpdate"]])) {
                 refetch();
             }
         }
