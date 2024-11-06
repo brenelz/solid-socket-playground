@@ -1,12 +1,5 @@
-import { createSignal } from "solid-js";
-import { useTodos } from "~/lib/socket";
-import { createSocketMemo } from "../../socket/lib/shared";
 import { createAsync, query } from "@solidjs/router";
-
-const testData = query(async function () {
-    "use server";
-    console.log('on server');
-}, 'getData');
+import { testData } from "~/lib/server";
 
 export default function Home() {
     const test = createAsync(() => testData())
@@ -16,6 +9,7 @@ export default function Home() {
     return (
         <>
             <p>test page</p>
+            {JSON.stringify(test())}
         </>
     )
 }
