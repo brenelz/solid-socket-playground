@@ -26,6 +26,7 @@ export const useSocketChat = () => {
         async function watch() {
             for await (const [_] of kv.watch([["triggerUpdate"]])) {
                 refetch();
+                console.log('refetching');
             }
         }
         watch();
